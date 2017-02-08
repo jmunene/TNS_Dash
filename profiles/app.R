@@ -31,7 +31,7 @@ server <- function(input, output) {
     
     data_f <- data %>% filter(data$X_uuid==select())
 
-        tags$img(src <- data_f$image)
+        tags$img(src = data_f$image)
   })
 }
 shinyApp(ui, server)
