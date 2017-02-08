@@ -1,23 +1,37 @@
 library(shinydashboard)
 library(dplyr)
-library(htmlwidgets)
 
 data <- Tdata
 
 ui <- dashboardPage(
-  dashboardHeader(title = "TNS-Monitoring Dashboard"),
-  dashboardSidebar(),
+  dashboardHeader(title = "TNS-Monitoring Dashboard",titleWidth = 350),
+  dashboardSidebar(disable=TRUE),
   dashboardBody(
     # Boxes need to be put in a row (or column)
     fluidRow(
-        box(
-        title = "Farmer ID",
-        textInput(
-          inputId = 'farmer_id', 
-          label = 'Enter Farmer ID', 
-          value = "")
+      tabBox(
+        title = "Profiles",
+        # The id lets us use input$tabset1 on the server to find the current tab
+        id = "profiles", height = "750px",
+        tabPanel("Farmers", 
+                 box(
+                   title = "Farmer ID",
+                   textInput(
+                     inputId = 'farmer_id', 
+                     label = 'Enter Farmer ID', 
+                     value = "")
+                 ),
+                 htmlOutput("image")
+                 ),
+        tabPanel("Agents", "Tab content 2")
       ),
-      htmlOutput("image")
+      tabBox(
+        title = "Sales",
+        # The id lets us use input$tabset1 on the server to find the current tab
+        id = "sales", height = "750px",
+        tabPanel("table", "Sales Table"),
+        tabPanel("charts", "Sales charts")
+      )
     )
   )
 )
